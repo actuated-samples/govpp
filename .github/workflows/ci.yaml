@@ -21,10 +21,6 @@ jobs:
       - uses: actions/setup-go@v1
         with:
           go-version: 1.15.3
-      - name: Set Swap Space
-        uses: pierotofy/set-swap-space@v1.0
-        with:
-          swap-size-gb: 4
       - name: Memory usage
         run: free -m
       - name: List installed packages
