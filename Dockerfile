@@ -21,7 +21,7 @@ CMD cat /vpp/VPP_VERSION
 
 FROM ubuntu:${UBUNTU_VERSION} as vppinstall
 COPY --from=vppbuild /var/lib/apt/lists/* /var/lib/apt/lists/
-COPY --from=vppbuild [ "/vpp/build-root/libvppinfra_*_aarch64.deb", "/vpp/build-root/vpp_*_aarch64.deb", "/vpp/build-root/vpp-plugin-core_*_aarch64.deb", "/vpp/build-root/vpp-plugin-dpdk_*_aarch64.deb", "/pkg/"]
+COPY --from=vppbuild [ "/vpp/build-root/libvppinfra_*_arm64.deb", "/vpp/build-root/vpp_*_arm64.deb", "/vpp/build-root/vpp-plugin-core_*_arm64.deb", "/vpp/build-root/vpp-plugin-dpdk_*_arm64.deb", "/pkg/"]
 RUN VPP_INSTALL_SKIP_SYSCTL=false apt install -f -y --no-install-recommends /pkg/*.deb ca-certificates iputils-ping iproute2 tcpdump iptables; \
     rm -rf /var/lib/apt/lists/*; \
     rm -rf /pkg
@@ -31,7 +31,7 @@ COPY --from=vppinstall / /
 
 FROM vpp as vpp-dbg
 WORKDIR /pkg/
-COPY --from=vppbuild ["/vpp/build-root/libvppinfra-dev_*_aarch64.deb", "/vpp/build-root/vpp-dbg_*_aarch64.deb", "/vpp/build-root/vpp-dev_*_aarch64.deb", "./" ]
+COPY --from=vppbuild ["/vpp/build-root/libvppinfra-dev_*_arm64.deb", "/vpp/build-root/vpp-dbg_*_arm64.deb", "/vpp/build-root/vpp-dev_*_arm64.deb", "./" ]
 RUN VPP_INSTALL_SKIP_SYSCTL=false apt install -f -y --no-install-recommends ./*.deb
 
 
